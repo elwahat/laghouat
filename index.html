@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جمعية الواحات الأغواطية لكرة القدم - لوحة التحكم الكاملة</title>
+    <title>جمعية الواحات الأغواطية لكرة القدم - الإدارة الفورية والسحابية</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -71,14 +71,20 @@
 </head>
 <body class="font-sans text-gray-800 bg-gray-50 antialiased selection:bg-brand-accent selection:text-white">
 
+    <!-- Loading Screen (Shows until Firestore content is fully loaded) -->
+    <div id="loading-screen" class="fixed inset-0 bg-brand z-[200] flex flex-col items-center justify-center text-white">
+        <div class="w-16 h-16 border-4 border-t-brand-accent border-brand-light rounded-full animate-spin mb-4"></div>
+        <p class="font-bold text-lg tracking-wider animate-pulse">جاري الاتصال بالسحابة ومزامنة البيانات...</p>
+    </div>
+
     <!-- Toast Notification System -->
-    <div id="toast-container" class="fixed top-5 left-5 z-[100] flex flex-col gap-3"></div>
+    <div id="toast-container" class="fixed top-5 left-5 z-[250] flex flex-col gap-3"></div>
 
     <!-- Admin Top Indicator Bar (Visible only when logged in) -->
     <div id="admin-bar" class="hidden bg-gradient-to-r from-amber-600 to-yellow-500 text-white px-4 py-2 text-center text-sm font-bold flex justify-between items-center z-[60] relative shadow-md">
         <div class="flex items-center gap-2">
-            <i class="fa-solid fa-user-gear animate-spin"></i>
-            <span>أنت في وضع الإدارة الآن. يمكنك تعديل جميع المحتويات مباشرة!</span>
+            <i class="fa-solid fa-user-gear animate-spin text-brand"></i>
+            <span>أنت في وضع الإدارة الآن. التعديلات التي تجريها تُحفظ فورياً وتظهر لجميع المستخدمين!</span>
         </div>
         <div class="flex gap-3">
             <button onclick="openAdminDashboard()" class="bg-brand text-white px-3 py-1 rounded text-xs hover:bg-brand-dark transition flex items-center gap-1 shadow">
@@ -158,14 +164,14 @@
 
     <!-- Hero Section -->
     <header class="relative pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden bg-brand">
-        <!-- Background Pattern / Image overlay -->
+        <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-brand to-transparent"></div>
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-accent mb-6 border border-brand-accent/30 relative">
                 <i class="fa-solid fa-futbol text-amber-400"></i>
-                <span id="hero-badge-preview" class="text-sm font-semibold tracking-wider">برنامج الجمعية للموسم الرياضي 2026 - 2027</span>
+                <span id="hero-badge-preview" class="text-sm font-semibold tracking-wider">جاري تحميل البادج...</span>
                 <button onclick="editHeroText()" class="admin-action-btn hidden absolute -top-3 -left-3 bg-amber-500 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs shadow hover:scale-110 transition">
                     <i class="fa-solid fa-pen"></i>
                 </button>
@@ -173,8 +179,7 @@
             
             <div class="relative group max-w-4xl mx-auto">
                 <h1 id="hero-title-preview" class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
-                    هدفنا واحد ... <br/>
-                    <span class="text-gradient">تطوير الفريق وتحقيق البطولات</span>
+                    جاري تحميل العنوان الرئيسي...
                 </h1>
                 <button onclick="editHeroText()" class="admin-action-btn hidden absolute top-0 -left-6 bg-amber-500 text-black rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:scale-110 transition">
                     <i class="fa-solid fa-pen"></i>
@@ -183,7 +188,7 @@
             
             <div class="relative max-w-2xl mx-auto mb-10">
                 <p id="hero-desc-preview" class="text-xl text-blue-200 font-light leading-relaxed">
-                    نعمل بروح الفريق... ونبني جيلاً يصنع المستقبل من خلال توفير بيئة رياضية احترافية لتطوير مهارات اللاعبين.
+                    جاري تحميل الوصف التعريفي...
                 </p>
                 <button onclick="editHeroText()" class="admin-action-btn hidden absolute top-0 -left-6 bg-amber-500 text-black rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:scale-110 transition">
                     <i class="fa-solid fa-pen"></i>
@@ -216,7 +221,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-brand mb-4">التعريف بالجمعية</h2>
                 <div class="w-24 h-1 bg-brand-accent mx-auto rounded-full mb-8"></div>
                 <p id="about-text-preview" class="text-lg text-gray-700 leading-relaxed mb-4">
-                    <strong class="text-brand">جمعية الواحات الأغواطية لكرة القدم</strong> هي مؤسسة رياضية رائدة تهدف إلى تطوير كرة القدم في ولاية الأغواط. نؤمن بأن الرياضة هي أداة بناء للمجتمع والأفراد، ولذلك نركز جهودنا على تكوين جيل رياضي يتمتع بالأخلاق العالية والمهارات الفنية المتميزة. نعمل معاً لصقل المواهب وفتح الآفاق أمام طاقات شباب الأغواط.
+                    جاري تحميل نص التعريف...
                 </p>
                 <button onclick="editAboutText()" class="admin-action-btn hidden absolute top-0 left-0 bg-amber-500 text-black rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:scale-110 transition">
                     <i class="fa-solid fa-pen"></i>
@@ -232,9 +237,9 @@
                 <div class="w-48 h-1 bg-gradient-to-l from-transparent via-brand-accent to-transparent mx-auto mt-4 rounded-full"></div>
             </div>
 
-            <!-- Board Members Grid (Dynamic Render) -->
+            <!-- Board Members Grid -->
             <div id="board-members-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamically generated via JS -->
+                <!-- Loaded dynamically -->
             </div>
 
             <!-- Admin add staff button -->
@@ -413,7 +418,7 @@
         </div>
     </section>
 
-    <!-- News & Articles Section (Dynamic Render with Edit Actions) -->
+    <!-- News & Articles Section -->
     <section id="news" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center mb-12 flex-wrap gap-4">
@@ -431,7 +436,7 @@
             </div>
 
             <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Dynamically generated via JS -->
+                <!-- Dynamically generated -->
             </div>
         </div>
     </section>
@@ -492,15 +497,15 @@
                         <textarea id="reg-health" rows="2" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition" placeholder="اكتب بالتفصيل إن وجد، أو اتركها فارغة"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-brand hover:bg-brand-light text-white font-bold rounded-lg shadow-lg hover:shadow-blue-900/30 transition duration-300 flex justify-center items-center gap-2">
-                        إرسال طلب التسجيل <i class="fa-solid fa-paper-plane"></i>
+                    <button type="submit" id="reg-submit-btn" class="w-full py-4 bg-brand hover:bg-brand-light text-white font-bold rounded-lg shadow-lg hover:shadow-blue-900/30 transition duration-300 flex justify-center items-center gap-2">
+                        إرسال طلب التسجيل السحابي <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Suggestions & Contact Section -->
+    <!-- Suggestions Section -->
     <section id="suggestions" class="py-16 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="bg-gray-50 border border-gray-100 rounded-2xl p-8 shadow-md">
@@ -528,7 +533,7 @@
                         <textarea id="sug-content" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition bg-white" placeholder="اكتب هنا كل التفاصيل..."></textarea>
                     </div>
 
-                    <button type="submit" class="w-full py-3 bg-brand-accent hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:shadow-blue-500/30 transition duration-300 flex justify-center items-center gap-2">
+                    <button type="submit" id="sug-submit-btn" class="w-full py-3 bg-brand-accent hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:shadow-blue-500/30 transition duration-300 flex justify-center items-center gap-2">
                         إرسال المقترح <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </form>
@@ -567,7 +572,7 @@
                     <h4 class="font-bold text-lg border-r-4 border-brand-accent pr-2">تواصل معنا</h4>
                     <ul class="space-y-2 text-sm text-blue-100 pr-2">
                         <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-accent"></i> الأغواط - الجزائر</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-brand-accent"></i> wahat.laghouat@domain.com</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-brand-accent"></i> admin.wahat@laghouat.dz</li>
                         <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-brand-accent"></i> +213 (0) 661 00 00 00</li>
                     </ul>
                     <div class="flex gap-4 pt-2">
@@ -581,7 +586,7 @@
             <!-- Copyright and Credits -->
             <div class="border-t border-brand-light mt-12 pt-6 text-center text-xs text-blue-300 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p>جميع الحقوق محفوظة © جمعية الواحات الأغواطية لكرة القدم - 2026</p>
-                <p>تم التطوير والبرمجة بكل فخر في الأغواط <i class="fa-solid fa-heart text-red-500 animate-pulse"></i></p>
+                <p>متصل بقاعدة البيانات الفورية <i class="fa-solid fa-cloud-arrow-up text-brand-accent animate-bounce"></i></p>
             </div>
         </div>
     </footer>
@@ -598,7 +603,7 @@
                 <p class="text-xs text-blue-300 mt-1">سجل الدخول لتعديل المقالات والشعار والمقترحات والرياضيين</p>
                 <button onclick="toggleModal('loginModal')" class="absolute top-6 left-6 text-white hover:text-red-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="handleAdminLogin(event)" class="p-6 space-y-4">
+            <form id="admin-login-form" onsubmit="window.handleAdminLogin(event)" class="p-6 space-y-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">اسم المستخدم</label>
                     <input type="text" id="admin-user" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none" placeholder="wahat.laghouat">
@@ -628,7 +633,7 @@
                     <input type="text" id="hero-badge-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">العنوان الرئيسي الملون (سطر 1)</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">العنوان الرئيسي الملون (يمكن استخدام أكواد HTML)</label>
                     <input type="text" id="hero-title-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none">
                 </div>
                 <div>
@@ -637,7 +642,7 @@
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button onclick="toggleModal('editHeroModal')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">إلغاء</button>
-                    <button onclick="saveHeroText()" class="px-5 py-2 bg-amber-500 text-brand font-bold rounded-lg hover:bg-amber-600 transition text-sm">حفظ التغييرات</button>
+                    <button onclick="window.saveHeroText()" class="px-5 py-2 bg-amber-500 text-brand font-bold rounded-lg hover:bg-amber-600 transition text-sm">حفظ وتطبيق للجميع</button>
                 </div>
             </div>
         </div>
@@ -657,7 +662,7 @@
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button onclick="toggleModal('editAboutModal')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">إلغاء</button>
-                    <button onclick="saveAboutText()" class="px-5 py-2 bg-amber-500 text-brand font-bold rounded-lg hover:bg-amber-600 transition text-sm">حفظ التغييرات</button>
+                    <button onclick="window.saveAboutText()" class="px-5 py-2 bg-amber-500 text-brand font-bold rounded-lg hover:bg-amber-600 transition text-sm">حفظ وتطبيق للجميع</button>
                 </div>
             </div>
         </div>
@@ -670,7 +675,7 @@
                 <h3 id="staff-modal-title" class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-user-pen"></i> تعديل بيانات الإداري</h3>
                 <button onclick="toggleModal('staffModal')" class="absolute top-6 left-6 text-brand hover:text-red-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form id="staff-form" onsubmit="saveStaffMember(event)" class="p-6 space-y-4">
+            <form id="staff-form" onsubmit="window.saveStaffMember(event)" class="p-6 space-y-4">
                 <input type="hidden" id="staff-index">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">الاسم واللقب</label>
@@ -684,21 +689,20 @@
                             <i class="fa-solid fa-user-tie"></i>
                         </div>
                     </div>
-                    <span class="text-xs text-gray-500">مثال: fa-solid fa-user-tie, fa-solid fa-user-shield, fa-solid fa-futbol</span>
                 </div>
                 
                 <div id="responsibilities-container" class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">المهام والمسؤوليات (يمكن إضافة أكثر من مهمة)</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">المهام والمسؤوليات</label>
                     <div id="roles-inputs-list" class="space-y-2">
                         <!-- Inputs added dynamically -->
                     </div>
-                    <button type="button" onclick="addResponsibilityInput('')" class="text-xs text-brand-accent hover:underline font-bold flex items-center gap-1 mt-1">
+                    <button type="button" onclick="window.addResponsibilityInput('')" class="text-xs text-brand-accent hover:underline font-bold flex items-center gap-1 mt-1">
                         <i class="fa-solid fa-plus-circle"></i> إضافة مهمة أخرى
                     </button>
                 </div>
 
                 <div class="flex justify-between gap-2 pt-4 border-t">
-                    <button type="button" id="delete-staff-btn" onclick="deleteStaffMember()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm flex items-center gap-1">
+                    <button type="button" id="delete-staff-btn" onclick="window.deleteStaffMember()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm flex items-center gap-1">
                         <i class="fa-solid fa-trash"></i> حذف من الطاقم
                     </button>
                     <div class="flex gap-2">
@@ -717,7 +721,7 @@
                 <h3 id="article-modal-title" class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-newspaper"></i> إضافة/تعديل المقال</h3>
                 <button onclick="toggleModal('articleModal')" class="absolute top-6 left-6 text-brand hover:text-red-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form id="article-form" onsubmit="saveArticle(event)" class="p-6 space-y-4">
+            <form id="article-form" onsubmit="window.saveArticle(event)" class="p-6 space-y-4">
                 <input type="hidden" id="article-index">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -748,7 +752,7 @@
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">صورة المقال</label>
                     <div class="flex items-center gap-4">
-                        <input type="file" id="article-image-file" onchange="previewArticleImage(event)" accept="image/*" class="hidden">
+                        <input type="file" id="article-image-file" onchange="window.previewArticleImage(event)" accept="image/*" class="hidden">
                         <button type="button" onclick="document.getElementById('article-image-file').click()" class="px-4 py-2 bg-gray-100 border text-gray-700 hover:bg-gray-200 transition rounded-lg text-sm flex items-center gap-1">
                             <i class="fa-solid fa-cloud-arrow-up"></i> رفع صورة للمقال
                         </button>
@@ -756,23 +760,22 @@
                             <span class="text-xs text-gray-400">لا توجد صورة</span>
                         </div>
                     </div>
-                    <span class="text-xs text-gray-400 mt-1 block">تنبيه: يتم ضغط الصورة وتحميلها بصيغة سريعة تلقائياً.</span>
                 </div>
 
                 <div class="flex justify-between gap-2 pt-4 border-t">
-                    <button type="button" id="delete-article-btn" onclick="deleteArticle()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm flex items-center gap-1">
+                    <button type="button" id="delete-article-btn" onclick="window.deleteArticle()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm flex items-center gap-1">
                         <i class="fa-solid fa-trash"></i> حذف المقال
                     </button>
                     <div class="flex gap-2">
                         <button type="button" onclick="toggleModal('articleModal')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">إلغاء</button>
-                        <button type="submit" class="px-5 py-2 bg-amber-500 text-brand font-bold rounded-lg hover:bg-amber-600 transition text-sm">حفظ المقال</button>
+                        <button type="submit" class="px-5 py-2 bg-amber-500 text-brand font-bold rounded-lg hover:bg-amber-600 transition text-sm">حفظ المقال للجميع</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Admin Comprehensive Dashboard Modal (Everything Manager) -->
+    <!-- Admin Comprehensive Dashboard Modal -->
     <div id="adminDashboardModal" class="fixed inset-0 bg-brand-dark/95 backdrop-blur-md z-[90] hidden overflow-y-auto">
         <div class="min-h-screen p-4 md:p-8 flex items-center justify-center">
             <div class="bg-white rounded-2xl w-full max-w-6xl shadow-2xl overflow-hidden border border-amber-500/30">
@@ -780,25 +783,25 @@
                 <div class="bg-brand text-white p-6 md:px-8 border-b border-brand-light flex justify-between items-center flex-wrap gap-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="bg-amber-500 text-brand-dark px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider">لوحة الإشراف الكاملة</span>
+                            <span class="bg-amber-500 text-brand-dark px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider">لوحة الإشراف السحابية</span>
                             <span class="text-blue-300 text-sm">جمعية الواحات الأغواطية</span>
                         </div>
-                        <h2 class="text-2xl md:text-3xl font-extrabold mt-1 text-white">بوابة التحكم والتحليل للمسؤولين</h2>
+                        <h2 class="text-2xl md:text-3xl font-extrabold mt-1 text-white">بوابة التحكم والتحليل والردود الفورية</h2>
                     </div>
                     <button onclick="toggleModal('adminDashboardModal')" class="bg-brand-light text-white hover:bg-red-600 w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg text-lg">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
 
-                <!-- Dashboard Tabs Navigation -->
+                <!-- Dashboard Tabs -->
                 <div class="bg-slate-100 border-b border-gray-200 px-4 md:px-8 flex overflow-x-auto gap-2">
-                    <button onclick="switchAdminTab('suggestions-tab')" id="tab-btn-suggestions-tab" class="dashboard-tab-btn py-4 px-4 font-bold text-sm text-brand border-b-2 border-brand-accent flex items-center gap-2 whitespace-nowrap">
+                    <button onclick="window.switchAdminTab('suggestions-tab')" id="tab-btn-suggestions-tab" class="dashboard-tab-btn py-4 px-4 font-bold text-sm text-brand border-b-2 border-brand-accent flex items-center gap-2 whitespace-nowrap">
                         <i class="fa-regular fa-comments text-brand-accent"></i> المقترحات والرد عليها (<span id="count-suggestions">0</span>)
                     </button>
-                    <button onclick="switchAdminTab('athletes-tab')" id="tab-btn-athletes-tab" class="dashboard-tab-btn py-4 px-4 font-bold text-sm text-gray-500 hover:text-brand border-b-2 border-transparent flex items-center gap-2 whitespace-nowrap">
+                    <button onclick="window.switchAdminTab('athletes-tab')" id="tab-btn-athletes-tab" class="dashboard-tab-btn py-4 px-4 font-bold text-sm text-gray-500 hover:text-brand border-b-2 border-transparent flex items-center gap-2 whitespace-nowrap">
                         <i class="fa-solid fa-users text-amber-500"></i> الرياضيون المسجلون (<span id="count-athletes">0</span>)
                     </button>
-                    <button onclick="switchAdminTab('settings-tab')" id="tab-btn-settings-tab" class="dashboard-tab-btn py-4 px-4 font-bold text-sm text-gray-500 hover:text-brand border-b-2 border-transparent flex items-center gap-2 whitespace-nowrap">
+                    <button onclick="window.switchAdminTab('settings-tab')" id="tab-btn-settings-tab" class="dashboard-tab-btn py-4 px-4 font-bold text-sm text-gray-500 hover:text-brand border-b-2 border-transparent flex items-center gap-2 whitespace-nowrap">
                         <i class="fa-solid fa-sliders text-teal-500"></i> إعدادات الهوية والشعار
                     </button>
                 </div>
@@ -806,25 +809,25 @@
                 <!-- Dashboard Content Area -->
                 <div class="p-6 md:p-8">
                     
-                    <!-- Tab: Suggestions & Feedback -->
+                    <!-- Tab: Suggestions -->
                     <div id="suggestions-tab" class="dashboard-tab-pane space-y-6">
                         <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
-                            <h3 class="text-lg font-bold text-brand">المقترحات والأفكار المستلمة من زوار الموقع</h3>
-                            <button onclick="clearAllSuggestions()" class="text-xs text-red-600 hover:underline"><i class="fa-solid fa-trash-can"></i> مسح جميع المقترحات</button>
+                            <h3 class="text-lg font-bold text-brand">المقترحات والأفكار المستلمة سحابياً</h3>
+                            <button onclick="window.clearAllSuggestions()" class="text-xs text-red-600 hover:underline"><i class="fa-solid fa-trash-can"></i> مسح جميع المقترحات</button>
                         </div>
                         <div id="dash-suggestions-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                             <!-- Populated via JS -->
                         </div>
                     </div>
 
-                    <!-- Tab: Athletes List -->
+                    <!-- Tab: Athletes -->
                     <div id="athletes-tab" class="dashboard-tab-pane hidden space-y-6">
                         <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                             <div>
-                                <h3 class="text-lg font-bold text-brand">قائمة الرياضيين المسجلين حديثاً</h3>
-                                <p class="text-xs text-gray-500">مراجعة ملفات اللاعبين الراغبين بالانضمام</p>
+                                <h3 class="text-lg font-bold text-brand">قائمة الرياضيين المسجلين سحابياً</h3>
+                                <p class="text-xs text-gray-500">مراجعة فورية لطلبات الانضمام المتلقاة</p>
                             </div>
-                            <button onclick="clearAllAthletes()" class="text-xs text-red-600 hover:underline"><i class="fa-solid fa-trash-can"></i> مسح قائمة المسجلين بالكامل</button>
+                            <button onclick="window.clearAllAthletes()" class="text-xs text-red-600 hover:underline"><i class="fa-solid fa-trash-can"></i> مسح جميع المسجلين</button>
                         </div>
                         <div class="overflow-x-auto rounded-lg border border-gray-200">
                             <table class="w-full text-sm text-right text-gray-500">
@@ -847,10 +850,10 @@
                         </div>
                     </div>
 
-                    <!-- Tab: Settings & Logo -->
+                    <!-- Tab: Settings -->
                     <div id="settings-tab" class="dashboard-tab-pane hidden space-y-8">
                         <div>
-                            <h3 class="text-lg font-bold text-brand mb-4">تعديل هوية الجمعية والرموز والشعار</h3>
+                            <h3 class="text-lg font-bold text-brand mb-4">تعديل هوية الجمعية والرموز والشعار للكل</h3>
                             
                             <!-- Logo Settings -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-b pb-8">
@@ -858,32 +861,29 @@
                                     <h4 class="font-bold text-sm text-gray-700"><i class="fa-solid fa-shield-halved"></i> شعار الجمعية الحالي</h4>
                                     <div class="p-4 bg-slate-50 border rounded-xl flex items-center gap-6">
                                         <div id="settings-logo-preview" class="w-16 h-20 bg-brand-light rounded-xl flex items-center justify-center border-2 border-brand-accent shadow-md overflow-hidden">
-                                            <!-- Dynamically rendered -->
                                             <i id="preview-logo-icon" class="fa-solid fa-shield-halved text-3xl text-white"></i>
                                             <img id="preview-logo-img" class="hidden w-full h-full object-cover" src="" alt="شعار">
                                         </div>
                                         <div>
-                                            <p class="text-xs text-gray-500">اختر طريقة لعرض الشعار:</p>
+                                            <p class="text-xs text-gray-500">طريقة عرض الشعار في الموقع:</p>
                                             <div class="flex gap-2 mt-2">
-                                                <button onclick="toggleLogoMode('icon')" id="logo-mode-icon-btn" class="px-3 py-1 bg-brand text-white text-xs font-bold rounded">أيقونة رمزية</button>
-                                                <button onclick="toggleLogoMode('image')" id="logo-mode-image-btn" class="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-bold rounded">صورة مخصصة</button>
+                                                <button onclick="window.toggleLogoMode('icon')" id="logo-mode-icon-btn" class="px-3 py-1 bg-brand text-white text-xs font-bold rounded">أيقونة رمزية</button>
+                                                <button onclick="window.toggleLogoMode('image')" id="logo-mode-image-btn" class="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-bold rounded">صورة مخصصة</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="space-y-4">
-                                    <!-- Logo Option 1: Icon Selector -->
                                     <div id="logo-option-icon" class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700">تغيير الأيقونة الرمزية (Font Awesome Class)</label>
                                         <input type="text" id="logo-icon-class-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none" value="fa-solid fa-shield-halved">
-                                        <span class="text-xs text-gray-400 block">خيارات ممتازة: fa-solid fa-shield-halved, fa-solid fa-trophy, fa-solid fa-star, fa-solid fa-award</span>
+                                        <span class="text-xs text-gray-400 block">أمثلة: fa-solid fa-shield-halved, fa-solid fa-trophy, fa-solid fa-star</span>
                                     </div>
 
-                                    <!-- Logo Option 2: Upload Image -->
                                     <div id="logo-option-image" class="space-y-2 hidden">
                                         <label class="block text-sm font-semibold text-gray-700">رفع صورة الشعار الجديدة</label>
-                                        <input type="file" id="logo-image-file" onchange="handleLogoUpload(event)" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        <input type="file" id="logo-image-file" onchange="window.handleLogoUpload(event)" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                     </div>
                                 </div>
                             </div>
@@ -894,19 +894,19 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label class="block text-sm font-semibold text-gray-700 mb-1">اسم الجمعية بالهيدر</label>
-                                        <input type="text" id="club-nav-title-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none" value="جمعية الواحات الأغواطية">
+                                        <input type="text" id="club-nav-title-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-semibold text-gray-700 mb-1">شعار الروح الرياضية بأسفل الطاقم</label>
-                                        <input type="text" id="club-quote-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none" value="نعمل بروح الفريق... ونبني جيلاً يصنع المستقبل">
+                                        <input type="text" id="club-quote-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent outline-none">
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Save Controls -->
                             <div class="mt-8 pt-6 border-t flex justify-end gap-2">
-                                <button onclick="saveGeneralSettings()" class="px-6 py-3 bg-brand text-white font-bold rounded-lg hover:bg-brand-light transition text-sm flex items-center gap-1">
-                                    <i class="fa-solid fa-floppy-disk"></i> حفظ كافة إعدادات الهوية والشعار
+                                <button onclick="window.saveGeneralSettings()" class="px-6 py-3 bg-brand text-white font-bold rounded-lg hover:bg-brand-light transition text-sm flex items-center gap-1">
+                                    <i class="fa-solid fa-floppy-disk"></i> حفظ كافة إعدادات الهوية والشعار سحابياً
                                 </button>
                             </div>
                         </div>
@@ -918,14 +918,28 @@
     </div>
 
 
-    <!-- ============================================== -->
-    <!-- JAVASCRIPT LOGIC & STATE ENGINE                -->
-    <!-- ============================================== -->
-    <script>
-        // Default Core App State (Will load/save to localStorage/memory to keep dynamically editable)
+    <!-- ======================================================= -->
+    <!-- REAL-TIME CLOUD STATE (FIRESTORE) INTEGRATION ENGINE     -->
+    <!-- ======================================================= -->
+    <script type="module">
+        // Firebase Cloud Modules Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Environment Variables Configurations
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'wahat-laghouat-app';
+        const firebaseConfig = JSON.parse(__firebase_config);
+        
+        // Init Services
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Core App State (Synced with Firestore in real-time)
         let AppState = {
             isAdmin: false,
-            logoMode: 'icon', // 'icon' or 'image'
+            logoMode: 'icon',
             logoIcon: 'fa-solid fa-shield-halved',
             logoImageBase64: '',
             navTitle: 'جمعية الواحات الأغواطية',
@@ -1017,103 +1031,129 @@
                     content: 'أقترح على الطاقم الإداري والفني تخصيص نصف ساعة أسبوعياً للتأطير والنصح النفسي والروحي للناشئين لبناء الأخلاق بموازاة مع المهارات الرياضية.',
                     reply: 'فكرة ممتازة جداً يا سي عبد القادر، سنقوم ببرمجة حصص دورية قصيرة مع تربويين ومختصين لمرافقة رياضيينا ذهنياً وأخلاقياً بداية من الشهر المقبل.',
                     status: 'تم الرد'
-                },
-                {
-                    id: 2,
-                    name: 'موساوي يوسف',
-                    title: 'تنظيم دوري رمضاني للأحياء بألوان الجمعية',
-                    content: 'أقترح أن ترعى الجمعية دوري أحياء مصغر في العطل والرحلات لاكتشاف المواهب المغمورة وضمهم للمدارس.',
-                    reply: '',
-                    status: 'قيد المراجعة'
                 }
             ],
 
-            athletes: [
-                {
-                    name: 'بهلولي محمد أمين',
-                    dob: '2015-05-12',
-                    category: 'مدارس (6-11 سنة)',
-                    position: 'حارس مرمى',
-                    guardian: 'بهلولي تجاني',
-                    phone: '0661223344',
-                    health: 'الحمد لله سليم ولا يعاني من شيء'
-                }
-            ]
+            athletes: []
         };
 
-        // Initialize state from LocalStorage if available (Never use localStorage is rule if firestore is needed, but we don't have Firestore requested yet, so to preserve edits for single session user let's use standard JSON, or local storage. To be compliant with "do NOT use Firestore by default for simple apps, build functional single session" - let's fall back to standard memory with localStorage as a luxury fallback so they can show their friends, but fully in-memory is safe.)
-        try {
-            const savedState = localStorage.getItem('wahat_laghouat_state_v1');
-            if (savedState) {
-                AppState = JSON.parse(savedState);
-                // Ensure auth is always reset to false on reload
-                AppState.isAdmin = false;
+        let userLoaded = null;
+
+        // Firebase Auth Init (RULE 3 Compliance)
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
             }
-        } catch (e) {
-            console.log("Local storage not accessible or empty.");
+        };
+
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userLoaded = user;
+                // Once authenticated, load and sync the database document from Firestore in Real-time
+                initFirestoreSync();
+            }
+        });
+
+        // Strict Paths (RULE 1 Compliance)
+        // Public Configuration / Database Path
+        const dbDocPath = doc(db, 'artifacts', appId, 'public', 'data', 'site_content', 'main_data');
+
+        // Setup real-time listeners
+        function initFirestoreSync() {
+            if (!userLoaded) return;
+
+            onSnapshot(dbDocPath, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    // Sync loaded data to local AppState (except auth status)
+                    AppState.logoMode = data.logoMode ?? AppState.logoMode;
+                    AppState.logoIcon = data.logoIcon ?? AppState.logoIcon;
+                    AppState.logoImageBase64 = data.logoImageBase64 ?? AppState.logoImageBase64;
+                    AppState.navTitle = data.navTitle ?? AppState.navTitle;
+                    AppState.heroBadge = data.heroBadge ?? AppState.heroBadge;
+                    AppState.heroTitle = data.heroTitle ?? AppState.heroTitle;
+                    AppState.heroDesc = data.heroDesc ?? AppState.heroDesc;
+                    AppState.aboutText = data.aboutText ?? AppState.aboutText;
+                    AppState.quoteText = data.quoteText ?? AppState.quoteText;
+                    AppState.boardMembers = data.boardMembers ?? AppState.boardMembers;
+                    AppState.articles = data.articles ?? AppState.articles;
+                    AppState.suggestions = data.suggestions ?? AppState.suggestions;
+                    AppState.athletes = data.athletes ?? AppState.athletes;
+
+                } else {
+                    // Document doesn't exist yet, save default AppState to firestore
+                    setDoc(dbDocPath, {
+                        logoMode: AppState.logoMode,
+                        logoIcon: AppState.logoIcon,
+                        logoImageBase64: AppState.logoImageBase64,
+                        navTitle: AppState.navTitle,
+                        heroBadge: AppState.heroBadge,
+                        heroTitle: AppState.heroTitle,
+                        heroDesc: AppState.heroDesc,
+                        aboutText: AppState.aboutText,
+                        quoteText: AppState.quoteText,
+                        boardMembers: AppState.boardMembers,
+                        articles: AppState.articles,
+                        suggestions: AppState.suggestions,
+                        athletes: AppState.athletes
+                    });
+                }
+
+                // Render App UI according to synced State
+                renderAllUIElements();
+                
+                // Hide Loading Screen
+                const loader = document.getElementById('loading-screen');
+                if (loader) loader.classList.add('hidden');
+
+            }, (error) => {
+                console.error("Firestore sync error:", error);
+                showToast("حدث خطأ أثناء مزامنة البيانات من السحابة.", "error");
+            });
         }
 
-        // Save State Utility
-        function saveStateToStorage() {
+        // Push AppState to Cloud Firestore
+        async function pushStateToCloud() {
+            if (!userLoaded) return;
             try {
-                localStorage.setItem('wahat_laghouat_state_v1', JSON.stringify(AppState));
+                await setDoc(dbDocPath, {
+                    logoMode: AppState.logoMode,
+                    logoIcon: AppState.logoIcon,
+                    logoImageBase64: AppState.logoImageBase64,
+                    navTitle: AppState.navTitle,
+                    heroBadge: AppState.heroBadge,
+                    heroTitle: AppState.heroTitle,
+                    heroDesc: AppState.heroDesc,
+                    aboutText: AppState.aboutText,
+                    quoteText: AppState.quoteText,
+                    boardMembers: AppState.boardMembers,
+                    articles: AppState.articles,
+                    suggestions: AppState.suggestions,
+                    athletes: AppState.athletes
+                });
             } catch (e) {
-                console.log("Saving to local storage failed.");
+                console.error("Cloud saving error: ", e);
+                showToast("فشل الحفظ في قاعدة البيانات السحابية.", "error");
             }
         }
 
-        // Toast System
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl text-white text-sm font-semibold border transition duration-300 transform translate-y-2 opacity-0`;
-            
-            if (type === 'success') {
-                toast.classList.add('bg-emerald-600', 'border-emerald-500');
-                toast.innerHTML = `<i class="fa-solid fa-circle-check text-lg"></i> <span>${message}</span>`;
-            } else if (type === 'error') {
-                toast.classList.add('bg-red-600', 'border-red-500');
-                toast.innerHTML = `<i class="fa-solid fa-circle-exclamation text-lg"></i> <span>${message}</span>`;
-            } else {
-                toast.classList.add('bg-amber-500', 'border-amber-400', 'text-brand');
-                toast.innerHTML = `<i class="fa-solid fa-circle-info text-lg"></i> <span>${message}</span>`;
-            }
-
-            container.appendChild(toast);
-            
-            // Animate In
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            // Remove Out
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y--2');
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
-        }
-
-        // Toggle Modals
-        function toggleModal(id) {
-            const modal = document.getElementById(id);
-            if (modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            } else {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
+        // Render UI Elements
+        function renderAllUIElements() {
+            renderGlobalSettings();
+            renderBoardMembers();
+            renderArticles();
+            if (document.getElementById('adminDashboardModal') && !document.getElementById('adminDashboardModal').classList.contains('hidden')) {
+                renderDashboardContent();
             }
         }
 
-        // Toggle Mobile Menu
-        function toggleMobileMenu() {
-            const panel = document.getElementById('mobileMenu');
-            panel.classList.toggle('hidden');
-        }
-
-        // Apply visual updates of the global settings
+        // Render Global Settings (Nav, Hero, Footer, Logo)
         function renderGlobalSettings() {
-            // Club Logo (Navbar & Footer)
             const logoContainers = [document.getElementById('club-logo-container'), document.getElementById('settings-logo-preview')];
             
             logoContainers.forEach(container => {
@@ -1133,20 +1173,16 @@
                 }
             });
 
-            // Footer Icon match
             const footerLogoIcon = document.getElementById('footer-logo-icon');
             if (footerLogoIcon) footerLogoIcon.className = `${AppState.logoIcon} text-xl text-white`;
 
-            // Club Title Texts
             document.getElementById('brand-title-text').innerText = AppState.navTitle;
             document.getElementById('quote-text-preview').querySelector('span').innerText = AppState.quoteText;
 
-            // Hero Custom Texts
             document.getElementById('hero-badge-preview').innerText = AppState.heroBadge;
             document.getElementById('hero-title-preview').innerHTML = AppState.heroTitle;
             document.getElementById('hero-desc-preview').innerText = AppState.heroDesc;
 
-            // About Text
             document.getElementById('about-text-preview').innerHTML = `<strong class="text-brand">جمعية الواحات الأغواطية لكرة القدم</strong> ` + AppState.aboutText;
         }
 
@@ -1158,7 +1194,6 @@
             AppState.boardMembers.forEach((member, index) => {
                 const formattedNum = String(index + 1).padStart(2, '0');
                 
-                // Construct responsibilities HTML
                 let responsibilitiesHTML = '';
                 member.roles.forEach((role, rIdx) => {
                     let iconClass = 'fa-solid fa-circle-dot';
@@ -1217,7 +1252,6 @@
                     </button>
                 ` : '';
 
-                // If image is relative placeholders, make sure it renders beautifully
                 let imgHTML = `<img src="${art.image}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500" alt="${art.title}">`;
                 if (!art.image || art.image.trim() === "") {
                     imgHTML = `<div class="w-full h-48 bg-gradient-to-br from-brand to-brand-light flex items-center justify-center text-white text-5xl"><i class="fa-regular fa-images"></i></div>`;
@@ -1241,13 +1275,11 @@
             });
         }
 
-        // Render Dashboard Lists
+        // Render Admin Dashboard
         function renderDashboardContent() {
-            // Update Counts
             document.getElementById('count-suggestions').innerText = AppState.suggestions.length;
             document.getElementById('count-athletes').innerText = AppState.athletes.length;
 
-            // Render Suggestions List
             const sugList = document.getElementById('dash-suggestions-list');
             sugList.innerHTML = '';
             
@@ -1287,7 +1319,6 @@
                 });
             }
 
-            // Render Athletes Table
             const athletesTable = document.getElementById('dash-athletes-table-body');
             athletesTable.innerHTML = '';
 
@@ -1322,20 +1353,17 @@
 
             if (usernameInput === 'wahat.laghouat' && passwordInput === 'wahat2026') {
                 AppState.isAdmin = true;
-                saveStateToStorage();
                 
-                // Show Admin Elements
                 document.getElementById('admin-bar').classList.remove('hidden');
                 document.getElementById('admin-dashboard-btn').classList.remove('hidden');
                 document.getElementById('admin-dashboard-btn-mobile').classList.remove('hidden');
                 document.getElementById('login-nav-btn').classList.add('hidden');
                 document.getElementById('login-nav-btn-mobile').classList.add('hidden');
                 
-                // Show all action/edit buttons on elements
                 document.querySelectorAll('.admin-action-btn').forEach(btn => btn.classList.remove('hidden'));
 
                 toggleModal('loginModal');
-                showToast('أهلاً بك! تم تسجيل الدخول كمسؤول بنجاح. تم فتح وضع التعديل الفوري!', 'success');
+                showToast('أهلاً بك! تم تسجيل الدخول كمسؤول بنجاح. تم فتح وضع التعديل الفوري والسحابي للكل!', 'success');
                 
                 renderBoardMembers();
                 renderArticles();
@@ -1348,7 +1376,6 @@
         // Logout Admin
         function logoutAdmin() {
             AppState.isAdmin = false;
-            saveStateToStorage();
             
             document.getElementById('admin-bar').classList.add('hidden');
             document.getElementById('admin-dashboard-btn').classList.add('hidden');
@@ -1369,7 +1396,6 @@
         function openAdminDashboard() {
             renderDashboardContent();
             
-            // Set settings pre-fill values
             document.getElementById('logo-icon-class-input').value = AppState.logoIcon;
             document.getElementById('club-nav-title-input').value = AppState.navTitle;
             document.getElementById('club-quote-input').value = AppState.quoteText;
@@ -1393,7 +1419,7 @@
         }
 
         // Add/Update Suggestion Reply
-        function submitSuggestionReply(index) {
+        async function submitSuggestionReply(index) {
             const replyInput = document.getElementById(`sug-reply-input-${index}`);
             const replyValue = replyInput.value.trim();
 
@@ -1404,44 +1430,44 @@
 
             AppState.suggestions[index].reply = replyValue;
             AppState.suggestions[index].status = "تم الرد";
-            saveStateToStorage();
+            await pushStateToCloud();
             renderDashboardContent();
-            showToast("تم إرسال الرد وحفظه بنجاح وسيظهر للزوار الآن!", "success");
+            showToast("تم إرسال الرد وحفظه سحابياً بنجاح للزوار!", "success");
         }
 
         // Delete Individual Suggestion
-        function deleteSuggestion(index) {
+        async function deleteSuggestion(index) {
             AppState.suggestions.splice(index, 1);
-            saveStateToStorage();
+            await pushStateToCloud();
             renderDashboardContent();
-            showToast("تم حذف المقترح بنجاح.", "info");
+            showToast("تم حذف المقترح بنجاح سحابياً.", "info");
         }
 
         // Clear All Suggestions
-        function clearAllSuggestions() {
+        async function clearAllSuggestions() {
             if (confirm("هل أنت متأكد من مسح جميع المقترحات؟ لا يمكن التراجع.")) {
                 AppState.suggestions = [];
-                saveStateToStorage();
+                await pushStateToCloud();
                 renderDashboardContent();
-                showToast("تم مسح المقترحات بالكامل.", "info");
+                showToast("تم مسح المقترحات السحابية بالكامل.", "info");
             }
         }
 
         // Delete Individual Athlete
-        function deleteAthlete(index) {
+        async function deleteAthlete(index) {
             AppState.athletes.splice(index, 1);
-            saveStateToStorage();
+            await pushStateToCloud();
             renderDashboardContent();
-            showToast("تم حذف الملف الرياضي للمسجل بنجاح.", "info");
+            showToast("تم حذف الملف الرياضي بنجاح من السحابة.", "info");
         }
 
         // Clear All Athletes
-        function clearAllAthletes() {
+        async function clearAllAthletes() {
             if (confirm("هل أنت متأكد من مسح قائمة المسجلين بالكامل؟")) {
                 AppState.athletes = [];
-                saveStateToStorage();
+                await pushStateToCloud();
                 renderDashboardContent();
-                showToast("تم تفريغ قائمة المسجلين.", "info");
+                showToast("تم تفريغ قائمة المسجلين السحابية.", "info");
             }
         }
 
@@ -1475,21 +1501,21 @@
                 reader.onload = function(e) {
                     AppState.logoImageBase64 = e.target.result;
                     renderGlobalSettings();
-                    showToast("تم تحميل ومعاينة الشعار الجديد بنجاح. اضغط حفظ أسفل لوحة التحكم لتطبيق التغيير النهائي.", "info");
+                    showToast("تم تحميل ومعاينة الشعار الجديد بنجاح. اضغط حفظ أسفل لوحة التحكم لتطبيق التغيير السحابي النهائي.", "info");
                 };
                 reader.readAsDataURL(file);
             }
         }
 
         // Save General Settings Tabs
-        function saveGeneralSettings() {
+        async function saveGeneralSettings() {
             AppState.logoIcon = document.getElementById('logo-icon-class-input').value.trim() || 'fa-solid fa-shield-halved';
             AppState.navTitle = document.getElementById('club-nav-title-input').value.trim() || 'جمعية الواحات الأغواطية';
             AppState.quoteText = document.getElementById('club-quote-input').value.trim() || 'نعمل بروح الفريق... ونبني جيلاً يصنع المستقبل';
             
-            saveStateToStorage();
+            await pushStateToCloud();
             renderGlobalSettings();
-            showToast("تم حفظ جميع إعدادات الهوية والشعار بنجاح في الموقع!", "success");
+            showToast("تم حفظ جميع إعدادات الهوية والشعار سحابياً بنجاح للكل!", "success");
         }
 
         // Open Hero Texts Edit Modal
@@ -1501,14 +1527,14 @@
         }
 
         // Save Hero Text
-        function saveHeroText() {
+        async function saveHeroText() {
             AppState.heroBadge = document.getElementById('hero-badge-input').value.trim();
             AppState.heroTitle = document.getElementById('hero-title-input').value.trim();
             AppState.heroDesc = document.getElementById('hero-desc-input').value.trim();
-            saveStateToStorage();
+            await pushStateToCloud();
             renderGlobalSettings();
             toggleModal('editHeroModal');
-            showToast("تم تحديث واجهة الترحيب بنجاح!", "success");
+            showToast("تم تحديث واجهة الترحيب سحابياً للجميع بنجاح!", "success");
         }
 
         // Open About Text Edit Modal
@@ -1518,12 +1544,12 @@
         }
 
         // Save About Text
-        function saveAboutText() {
+        async function saveAboutText() {
             AppState.aboutText = document.getElementById('about-text-input').value.trim();
-            saveStateToStorage();
+            await pushStateToCloud();
             renderGlobalSettings();
             toggleModal('editAboutModal');
-            showToast("تم تحديث نص التعريف بالجمعية بنجاح!", "success");
+            showToast("تم تحديث نص التعريف سحابياً بنجاح!", "success");
         }
 
         // Dynamically add responsibility input to staff edit modal
@@ -1549,14 +1575,12 @@
             document.getElementById('staff-icon').value = member.icon || 'fa-solid fa-user';
             document.getElementById('staff-icon-preview').innerHTML = `<i class="${member.icon || 'fa-solid fa-user'}"></i>`;
 
-            // Reset list of roles inputs
             const rolesList = document.getElementById('roles-inputs-list');
             rolesList.innerHTML = '';
             
             member.roles.forEach(role => addResponsibilityInput(role));
             if (member.roles.length === 0) addResponsibilityInput('');
 
-            // Dynamic live preview of staff icon inside modal
             document.getElementById('staff-icon').addEventListener('input', function(e) {
                 document.getElementById('staff-icon-preview').innerHTML = `<i class="${e.target.value}"></i>`;
             });
@@ -1576,19 +1600,18 @@
             
             const rolesList = document.getElementById('roles-inputs-list');
             rolesList.innerHTML = '';
-            addResponsibilityInput(''); // add at least one empty input
+            addResponsibilityInput('');
 
             toggleModal('staffModal');
         }
 
         // Save Staff Member
-        function saveStaffMember(event) {
+        async function saveStaffMember(event) {
             event.preventDefault();
             const index = document.getElementById('staff-index').value;
             const name = document.getElementById('staff-name').value.trim();
             const icon = document.getElementById('staff-icon').value.trim();
             
-            // Gather values of roles
             const roles = [];
             document.querySelectorAll('.responsibility-item-input').forEach(input => {
                 const val = input.value.trim();
@@ -1599,30 +1622,30 @@
 
             if (index === 'new') {
                 AppState.boardMembers.push(memberData);
-                showToast(`تمت إضافة ${name} إلى الطاقم الإداري للجمعية بنجاح!`, 'success');
+                showToast(`تمت إضافة ${name} سحابياً للطاقم الإداري بنجاح!`, 'success');
             } else {
                 const idx = parseInt(index);
                 AppState.boardMembers[idx] = memberData;
-                showToast(`تم تحديث ملف الإداري ${name} بنجاح.`, 'success');
+                showToast(`تم تحديث ملف الإداري ${name} ومزامنته سحابياً بنجاح.`, 'success');
             }
 
-            saveStateToStorage();
+            await pushStateToCloud();
             renderBoardMembers();
             toggleModal('staffModal');
         }
 
         // Delete Staff Member
-        function deleteStaffMember() {
+        async function deleteStaffMember() {
             const index = document.getElementById('staff-index').value;
             if (index !== 'new') {
                 const idx = parseInt(index);
                 const name = AppState.boardMembers[idx].name;
                 if (confirm(`هل أنت متأكد من حذف المسؤول ${name} من طاقم الجمعية؟`)) {
                     AppState.boardMembers.splice(idx, 1);
-                    saveStateToStorage();
+                    await pushStateToCloud();
                     renderBoardMembers();
                     toggleModal('staffModal');
-                    showToast(`تم حذف ${name} بنجاح من قائمة الإداريين.`, 'info');
+                    showToast(`تم حذف ${name} ومزامنته للجميع بنجاح.`, 'info');
                 }
             }
         }
@@ -1676,7 +1699,6 @@
             toggleModal('articleModal');
         }
 
-        // Helper to format date
         function getFormattedDateToday() {
             const months = ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
             const d = new Date();
@@ -1684,7 +1706,7 @@
         }
 
         // Save / Update Article
-        function saveArticle(event) {
+        async function saveArticle(event) {
             event.preventDefault();
             const index = document.getElementById('article-index').value;
             const title = document.getElementById('article-title').value.trim();
@@ -1701,38 +1723,43 @@
             };
 
             if (index === 'new') {
-                AppState.articles.unshift(articleData); // Newest on top
-                showToast(`تم نشر مقال "${title}" بنجاح في قائمة الأخبار!`, 'success');
+                AppState.articles.unshift(articleData);
+                showToast(`تم نشر مقال "${title}" ومزامنته سحابياً بنجاح للكل!`, 'success');
             } else {
                 const idx = parseInt(index);
                 AppState.articles[idx] = articleData;
-                showToast(`تم تعديل وحفظ المقال بنجاح.`, 'success');
+                showToast(`تم تعديل ومزامنة المقال سحابياً بنجاح.`, 'success');
             }
 
-            saveStateToStorage();
+            await pushStateToCloud();
             renderArticles();
             toggleModal('articleModal');
         }
 
         // Delete Article
-        function deleteArticle() {
+        async function deleteArticle() {
             const index = document.getElementById('article-index').value;
             if (index !== 'new') {
                 const idx = parseInt(index);
                 const title = AppState.articles[idx].title;
                 if (confirm(`هل أنت متأكد من حذف مقال: "${title}"؟`)) {
                     AppState.articles.splice(idx, 1);
-                    saveStateToStorage();
+                    await pushStateToCloud();
                     renderArticles();
                     toggleModal('articleModal');
-                    showToast(`تم حذف المقال بنجاح.`, 'info');
+                    showToast(`تم حذف المقال سحابياً للجميع.`, 'info');
                 }
             }
         }
 
-        // Submit Athlete Registration Form (For Users)
-        function handleRegistrationSubmit(event) {
+        // Submit Athlete Registration Form
+        async function handleRegistrationSubmit(event) {
             event.preventDefault();
+            
+            const submitBtn = document.getElementById('reg-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `جاري الإرسال للسحابة... <i class="fa-solid fa-spinner animate-spin"></i>`;
+
             const name = document.getElementById('reg-name').value.trim();
             const dob = document.getElementById('reg-dob').value;
             const category = document.getElementById('reg-category').value;
@@ -1744,21 +1771,29 @@
             const newAthlete = { name, dob, category, position, guardian, phone, health };
             
             AppState.athletes.push(newAthlete);
-            saveStateToStorage();
+            await pushStateToCloud();
 
             document.getElementById('athlete-reg-form').reset();
-            showToast(`أحسنت يا ${name}! تم تقديم طلب التسجيل بنجاح. ستقوم إدارة الجمعية بالتواصل مع الولي قريباً.`, 'success');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `إرسال طلب التسجيل السحابي <i class="fa-solid fa-paper-plane"></i>`;
+            
+            showToast(`أحسنت يا ${name}! تم تقديم طلب التسجيل السحابي بنجاح ومزامنته للإدارة.`, 'success');
         }
 
-        // Submit Suggestion Form (For Users)
-        function handleSuggestionSubmit(event) {
+        // Submit Suggestion Form
+        async function handleSuggestionSubmit(event) {
             event.preventDefault();
+
+            const submitBtn = document.getElementById('sug-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `جاري الرفع سحابياً... <i class="fa-solid fa-spinner animate-spin"></i>`;
+
             const name = document.getElementById('sug-name').value.trim();
             const title = document.getElementById('sug-title').value.trim();
             const content = document.getElementById('sug-content').value.trim();
 
             const newSug = {
-                id: AppState.suggestions.length + 1,
+                id: Date.now(),
                 name,
                 title,
                 content,
@@ -1767,20 +1802,82 @@
             };
 
             AppState.suggestions.unshift(newSug);
-            saveStateToStorage();
+            await pushStateToCloud();
 
             document.getElementById('suggestion-form').reset();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `إرسال المقترح <i class="fa-solid fa-paper-plane"></i>`;
             
-            // Auto scroll preview suggestions area down and show successfully sent
-            showToast('شكراً جزيلاً لمقترحك! تم إرساله بنجاح إلى إدارة الجمعية لدراسته والرد عليه.', 'success');
+            showToast('شكراً جزيلاً! تم رفع مقترحك سحابياً لإدارة الجمعية ومزامنته فوراً.', 'success');
         }
 
-        // Initialize Web Application Onload
-        window.onload = function() {
-            renderGlobalSettings();
-            renderBoardMembers();
-            renderArticles();
-        }
+        // Bind interactive functions to window object (Needed for HTML inline clicks in ESM)
+        window.toggleModal = (id) => {
+            const modal = document.getElementById(id);
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+        };
+        window.toggleMobileMenu = () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        };
+        window.handleAdminLogin = handleAdminLogin;
+        window.logoutAdmin = logoutAdmin;
+        window.openAdminDashboard = openAdminDashboard;
+        window.switchAdminTab = switchAdminTab;
+        window.submitSuggestionReply = submitSuggestionReply;
+        window.deleteSuggestion = deleteSuggestion;
+        window.clearAllSuggestions = clearAllSuggestions;
+        window.deleteAthlete = deleteAthlete;
+        window.clearAllAthletes = clearAllAthletes;
+        window.toggleLogoMode = toggleLogoMode;
+        window.handleLogoUpload = handleLogoUpload;
+        window.saveGeneralSettings = saveGeneralSettings;
+        window.editHeroText = editHeroText;
+        window.saveHeroText = saveHeroText;
+        window.editAboutText = editAboutText;
+        window.saveAboutText = saveAboutText;
+        window.addResponsibilityInput = addResponsibilityInput;
+        window.openEditStaffModal = openEditStaffModal;
+        window.openAddStaffModal = openAddStaffModal;
+        window.saveStaffMember = saveStaffMember;
+        window.deleteStaffMember = deleteStaffMember;
+        window.previewArticleImage = previewArticleImage;
+        window.openArticleModal = openArticleModal;
+        window.saveArticle = saveArticle;
+        window.deleteArticle = deleteArticle;
+        window.handleRegistrationSubmit = handleRegistrationSubmit;
+        window.handleSuggestionSubmit = handleSuggestionSubmit;
+
+        // Custom Toast Global Helper
+        window.showToast = (message, type = 'success') => {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl text-white text-sm font-semibold border transition duration-300 transform translate-y-2 opacity-0 z-[300]`;
+            
+            if (type === 'success') {
+                toast.classList.add('bg-emerald-600', 'border-emerald-500');
+                toast.innerHTML = `<i class="fa-solid fa-circle-check text-lg"></i> <span>${message}</span>`;
+            } else if (type === 'error') {
+                toast.classList.add('bg-red-600', 'border-red-500');
+                toast.innerHTML = `<i class="fa-solid fa-circle-exclamation text-lg"></i> <span>${message}</span>`;
+            } else {
+                toast.classList.add('bg-amber-500', 'border-amber-400', 'text-brand');
+                toast.innerHTML = `<i class="fa-solid fa-circle-info text-lg"></i> <span>${message}</span>`;
+            }
+
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y--2');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        };
+
     </script>
 </body>
 </html>
