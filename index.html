@@ -1,202 +1,1036 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جمعية الواحات الأغواطية لكرة القدم</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جمعية الواحات الأغواطية لكرة القدم</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-    body{
-        margin:0;
-        font-family: "Tahoma", sans-serif;
-        background:#0b2e13;
-        color:white;
-    }
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#1e3a8a', // Blue 900
+                            DEFAULT: '#001f3f', // Dark navy from image
+                            dark: '#001122',
+                            accent: '#3b82f6', // Blue 500
+                            gold: '#fbbf24' // For stars and highlights
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-    header{
-        background:#071b0c;
-        text-align:center;
-        padding:20px;
-        border-bottom:3px solid gold;
-    }
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #001f3f; }
+        
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Gradient Text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to left, #60a5fa, #ffffff);
+        }
 
-    header img{
-        width:140px;
-        border-radius:10px;
-    }
-
-    h1,h2{
-        color:gold;
-    }
-
-    nav{
-        display:flex;
-        justify-content:center;
-        gap:15px;
-        background:#0f3a1c;
-        padding:10px;
-        flex-wrap:wrap;
-    }
-
-    nav button{
-        background:gold;
-        border:none;
-        padding:10px 15px;
-        cursor:pointer;
-        font-weight:bold;
-        border-radius:5px;
-    }
-
-    section{
-        display:none;
-        padding:20px;
-    }
-
-    .active{
-        display:block;
-    }
-
-    .card{
-        background:#134d28;
-        padding:15px;
-        margin:10px 0;
-        border-radius:10px;
-    }
-
-    input, textarea{
-        width:100%;
-        padding:10px;
-        margin:8px 0;
-        border:none;
-        border-radius:5px;
-    }
-
-    .btn{
-        background:gold;
-        padding:10px;
-        border:none;
-        cursor:pointer;
-        font-weight:bold;
-        width:100%;
-    }
-
-    .login-box{
-        max-width:400px;
-        margin:auto;
-        background:#134d28;
-        padding:20px;
-        border-radius:10px;
-    }
-
-    footer{
-        text-align:center;
-        padding:15px;
-        background:#071b0c;
-        margin-top:20px;
-        border-top:2px solid gold;
-    }
-</style>
+        /* Glassmorphism for cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
+<body class="font-sans text-gray-800 bg-gray-50 antialiased selection:bg-brand-accent selection:text-white">
 
-<body>
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="bg-brand text-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <!-- Logo Area -->
+                    <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                        <div class="w-12 h-14 bg-brand-light rounded-b-xl flex items-center justify-center border-2 border-t-0 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                            <i class="fa-solid fa-shield-halved text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="font-bold text-lg md:text-xl leading-tight">جمعية الواحات الأغواطية</h1>
+                            <p class="text-xs text-blue-300">لكرة القدم - LAGHOUAT</p>
+                        </div>
+                    </div>
 
-<header>
-    <img src="/mnt/data/1000057568.png" alt="الشعار">
-    <h1>جمعية الواحات الأغواطية لكرة القدم</h1>
-</header>
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex space-x-reverse space-x-1 lg:space-x-4 items-center">
+                        <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-brand-light transition">التعريف والإدارة</a>
+                        <a href="#program" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-brand-light transition">برنامجنا</a>
+                        <a href="#categories" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-brand-light transition">الفئات</a>
+                        <a href="#news" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-brand-light transition">الأخبار</a>
+                        <a href="#register" class="px-3 py-2 rounded-md text-sm font-medium bg-brand-accent hover:bg-blue-600 transition shadow-lg">تسجيل الرياضيين</a>
+                        <button onclick="toggleModal('loginModal')" class="px-4 py-2 rounded-md text-sm font-bold border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-white transition flex items-center gap-2">
+                            <i class="fa-solid fa-user-lock"></i> دخول الأعضاء
+                        </button>
+                    </div>
 
-<nav>
-    <button onclick="show('home')">الرئيسية</button>
-    <button onclick="show('about')">تعريف الجمعية</button>
-    <button onclick="show('news')">الأخبار</button>
-    <button onclick="show('register')">تسجيل الأطفال</button>
-    <button onclick="show('suggest')">اقتراحات</button>
-    <button onclick="show('login')">دخول العضوية</button>
-</nav>
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden flex items-center">
+                        <button onclick="toggleMobileMenu()" class="text-white hover:text-brand-accent focus:outline-none">
+                            <i class="fa-solid fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-light shadow-xl absolute w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand">التعريف والإدارة</a>
+                <a href="#program" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand">برنامجنا</a>
+                <a href="#categories" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand">الفئات</a>
+                <a href="#news" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand">الأخبار</a>
+                <a href="#register" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-brand-accent hover:bg-brand">تسجيل الرياضيين</a>
+                <a href="#suggestions" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand">المقترحات</a>
+                <button onclick="toggleModal('loginModal'); toggleMobileMenu()" class="w-full text-right px-3 py-2 rounded-md text-base font-bold bg-brand-accent text-white hover:bg-blue-600 mt-2">
+                    دخول الأعضاء <i class="fa-solid fa-sign-in-alt ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-<!-- HOME -->
-<section id="home" class="active">
-    <div class="card">
-        <h2>مرحبا بكم</h2>
-        <p>الموقع الرسمي لجمعية الواحات الأغواطية لكرة القدم، منصة لتطوير المواهب الرياضية.</p>
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand">
+        <!-- Background Pattern / Image overlay -->
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand to-transparent"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-accent mb-6 animate-pulse border border-brand-accent/30">
+                <i class="fa-solid fa-futbol"></i>
+                <span class="text-sm font-semibold tracking-wider">برنامج الجمعية للموسم الرياضي 2026 - 2027</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                هدفنا واحد ... <br/>
+                <span class="text-gradient">تطوير الفريق وتحقيق البطولات</span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl text-xl text-blue-200 mx-auto font-light">
+                نعمل بروح الفريق... ونبني جيلاً يصنع المستقبل من خلال توفير بيئة رياضية احترافية لتطوير مهارات اللاعبين.
+            </p>
+            
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#register" class="px-8 py-4 bg-brand-accent hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:shadow-blue-500/50 transition duration-300 flex justify-center items-center gap-2 transform hover:-translate-y-1">
+                    انضم إلينا الآن <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <a href="#program" class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-brand font-bold rounded-lg transition duration-300 flex justify-center items-center gap-2">
+                    اكتشف برنامجنا
+                </a>
+            </div>
+        </div>
+        
+        <!-- Decorative Waves -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,123.63,195.48,110.43c58.3-11.9,114.5-30.7,172.4-41.9,82.3-15.9,168.1-16.7,250.4-.4,82.3,16.2,165.2,57.2,244.2,78.1,70,18.5,146.5,26.1,214.3,3V120H0Z" fill="#f8fafc"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- About & Board Members Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Association Intro -->
+            <div class="text-center max-w-4xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand mb-4">التعريف بالجمعية</h2>
+                <div class="w-24 h-1 bg-brand-accent mx-auto rounded-full mb-8"></div>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    <strong class="text-brand">جمعية الواحات الأغواطية لكرة القدم</strong> هي مؤسسة رياضية رائدة تهدف إلى تطوير كرة القدم في ولاية الأغواط. نؤمن بأن الرياضة هي أداة بناء للمجتمع والأفراد، ولذلك نركز جهودنا على تكوين جيل رياضي يتمتع بالأخلاق العالية والمهارات الفنية المتميزة.
+                </p>
+            </div>
+
+            <!-- Board Members Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand mb-4 flex justify-center items-center gap-3">
+                    <i class="fa-solid fa-users-gear text-brand-accent text-2xl"></i> إداريو جمعية الواحات الأغواطية <i class="fa-solid fa-users-gear text-brand-accent text-2xl"></i>
+                </h2>
+                <p class="text-gray-500 font-semibold text-lg">الموسم الرياضي 2026 - 2027</p>
+                <div class="w-48 h-1 bg-gradient-to-l from-transparent via-brand-accent to-transparent mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Board Members Grid (9 Members) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Member 01 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">01</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user-tie text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">بهلولي تجاني</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-user-tie text-brand-accent w-4 text-center"></i> <span>رئيس الجمعية</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-mitten text-brand-accent w-4 text-center"></i> <span>مدرب حراس المرمى</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 02 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">02</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user-shield text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">بن ثابت موسى</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-user-shield text-brand-accent w-4 text-center"></i> <span>نائب رئيس الجمعية</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-bullhorn text-brand-accent w-4 text-center"></i> <span>المكلف بالإعلام</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-futbol text-brand-accent w-4 text-center"></i> <span>مدرب كرة قدم</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 03 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">03</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user-pen text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">طعبة أحمد</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-file-signature text-brand-accent w-4 text-center"></i> <span>كاتب عام</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 04 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">04</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">زيد الخير صلاح</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-user-pen text-brand-accent w-4 text-center"></i> <span>نائب كاتب العام</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-stopwatch text-brand-accent w-4 text-center"></i> <span>مساعد مدرب</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 05 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">05</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">كعباش محمد العيد</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-sack-dollar text-brand-accent w-4 text-center"></i> <span>نائب المالية</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-handshake text-brand-accent w-4 text-center"></i> <span>المنسق بين أولياء اللاعبين</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 06 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">06</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">بهلولي يحي</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-coins text-brand-accent w-4 text-center"></i> <span>أمين مال</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 07 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">07</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">بن يعقوب لمين</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-box-open text-brand-accent w-4 text-center"></i> <span>المكلف بالمخزن</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 08 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">08</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">رنان أمين</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-hands-bubbles text-brand-accent w-4 text-center"></i> <span>مساعد مدرب حراس المرمى</span></li>
+                    </ul>
+                </div>
+
+                <!-- Member 09 -->
+                <div class="bg-brand rounded-2xl p-6 shadow-xl relative overflow-hidden group border border-brand-accent/20 hover:border-brand-accent transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute top-4 right-4 bg-brand-light text-brand-accent font-bold px-3 py-1 rounded-lg text-sm shadow-md border border-brand-accent/30 z-10">09</div>
+                    <div class="w-28 h-28 mx-auto mb-4 relative z-10 mt-2">
+                        <div class="absolute inset-0 border-2 border-brand-accent/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition duration-500"></div>
+                        <div class="w-full h-full bg-gradient-to-b from-brand-light to-brand rounded-full flex items-center justify-center border-2 border-brand-accent shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <i class="fa-solid fa-user text-4xl text-white opacity-80"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4 bg-brand-light/50 py-2 rounded-lg backdrop-blur-sm">بن برطال عبد الوهاب</h3>
+                    <ul class="space-y-2 text-sm text-blue-100 bg-brand-dark/30 p-3 rounded-lg border border-white/5">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-map-location-dot text-brand-accent w-4 text-center"></i> <span class="leading-tight">المكلف بتسيير السياحة الترفيهية وتنظيم الخرجات</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Spirit Quote -->
+            <div class="mt-16 bg-gradient-to-r from-brand-light via-brand to-brand-light rounded-xl p-6 text-center shadow-lg border border-brand-accent/30">
+                <p class="text-2xl md:text-3xl font-bold text-white flex justify-center items-center gap-4">
+                    <i class="fa-solid fa-users text-brand-accent opacity-50"></i>
+                    نعمل بروح الفريق... ونبني جيلاً يصنع المستقبل
+                    <i class="fa-solid fa-futbol text-brand-accent opacity-50"></i>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values Section (From Image 1) -->
+    <section class="py-16 bg-brand text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex justify-center items-center gap-3">
+                    <i class="fa-solid fa-star text-brand-accent text-2xl"></i> قيمنا <i class="fa-solid fa-star text-brand-accent text-2xl"></i>
+                </h2>
+                <div class="w-24 h-1 bg-brand-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
+                <div class="glass-card p-6 rounded-xl hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">رؤيتنا</h3>
+                    <p class="text-sm text-blue-200">التميز في تكوين اللاعبين وصناعة جيل رياضي منافس</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">رسالتنا</h3>
+                    <p class="text-sm text-blue-200">توفير بيئة رياضية احترافية لتطوير مهارات اللاعبين</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl hover:-translate-y-2 transition duration-300 border border-brand-accent">
+                    <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-brand-accent">قيمنا</h3>
+                    <ul class="text-sm text-blue-200 text-right list-disc list-inside">
+                        <li>الانضباط</li>
+                        <li>العمل الجماعي</li>
+                        <li>الالتزام</li>
+                        <li>التطوير</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-6 rounded-xl hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">شعارنا</h3>
+                    <p class="text-sm text-blue-200">نعمل معاً ... لنصنع النجاح</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">روحنا</h3>
+                    <p class="text-sm text-blue-200">روح الفريق والعمل الجماعي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Goals Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand mb-4 flex justify-center items-center gap-3">
+                    <i class="fa-solid fa-star text-brand-accent text-xl"></i> أهداف البرنامج <i class="fa-solid fa-star text-brand-accent text-xl"></i>
+                </h2>
+                <div class="w-24 h-1 bg-brand-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center shadow-sm hover:shadow-md transition">
+                    <i class="fa-solid fa-clipboard-list text-3xl text-brand-accent mb-4"></i>
+                    <p class="font-bold text-brand">المشاركة في البطولات المحلية والوطنية</p>
+                </div>
+                <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center shadow-sm hover:shadow-md transition">
+                    <i class="fa-solid fa-users-rays text-3xl text-brand-accent mb-4"></i>
+                    <p class="font-bold text-brand">غرس القيم والانضباط والروح الرياضية</p>
+                </div>
+                <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center shadow-sm hover:shadow-md transition">
+                    <i class="fa-solid fa-chart-line text-3xl text-brand-accent mb-4"></i>
+                    <p class="font-bold text-brand">تطوير الأداء البدني والفني والذهني</p>
+                </div>
+                <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center shadow-sm hover:shadow-md transition">
+                    <i class="fa-solid fa-medal text-3xl text-brand-accent mb-4"></i>
+                    <p class="font-bold text-brand">تحقيق نتائج رياضية متميزة</p>
+                </div>
+                <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center shadow-sm hover:shadow-md transition">
+                    <i class="fa-solid fa-person-running text-3xl text-brand-accent mb-4"></i>
+                    <p class="font-bold text-brand">إعداد جيل من اللاعبين المميزين</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Components Section -->
+    <section id="program" class="py-16 bg-brand-light text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 flex justify-center items-center gap-3">
+                    <i class="fa-solid fa-star text-brand-accent text-xl"></i> مكونات البرنامج <i class="fa-solid fa-star text-brand-accent text-xl"></i>
+                </h2>
+                <div class="w-24 h-1 bg-brand-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Training -->
+                <div class="glass-card p-6 rounded-xl border-t-4 border-t-brand-accent relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-8xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-person-running"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-person-running text-2xl text-brand-accent"></i>
+                            <h3 class="text-xl font-bold">التدريب الفني</h3>
+                        </div>
+                        <ul class="text-sm space-y-2 text-blue-100">
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> حصص تدريبية منتظمة</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تطوير المهارات الفردية</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> خطط تدريبية حديثة</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> مباريات ودية وتطبيقية</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Physical Fitness -->
+                <div class="glass-card p-6 rounded-xl border-t-4 border-t-brand-accent relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-8xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-dumbbell"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-dumbbell text-2xl text-brand-accent"></i>
+                            <h3 class="text-xl font-bold">اللياقة البدنية</h3>
+                        </div>
+                        <ul class="text-sm space-y-2 text-blue-100">
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> برامج لياقة متكاملة</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تقوية العضلات والتحمل</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> اختبارات دورية</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تأهيل بدني متخصص</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mental Aspect -->
+                <div class="glass-card p-6 rounded-xl border-t-4 border-t-brand-accent relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-8xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-brain"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-brain text-2xl text-brand-accent"></i>
+                            <h3 class="text-xl font-bold">الجانب الذهني</h3>
+                        </div>
+                        <ul class="text-sm space-y-2 text-blue-100">
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تركيز وتنمية ذهنية</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> إدارة الضغوط</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> بناء الثقة والتحفيز</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تحسين اتخاذ القرار</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Evaluation -->
+                <div class="glass-card p-6 rounded-xl border-t-4 border-t-brand-accent relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-8xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-display"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-display text-2xl text-brand-accent"></i>
+                            <h3 class="text-xl font-bold">التقييم والمتابعة</h3>
+                        </div>
+                        <ul class="text-sm space-y-2 text-blue-100">
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تقييم الأداء بشكل دوري</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تقارير فنية للاعبين</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> متابعة التطور المستمر</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> جلسات تحليل الأداء</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Health Care -->
+                <div class="glass-card p-6 rounded-xl border-t-4 border-t-brand-accent relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-8xl group-hover:scale-110 transition duration-500"><i class="fa-solid fa-suitcase-medical"></i></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-suitcase-medical text-2xl text-brand-accent"></i>
+                            <h3 class="text-xl font-bold">الرعاية الصحية</h3>
+                        </div>
+                        <ul class="text-sm space-y-2 text-blue-100">
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> متابعة طبية مستمرة</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> الوقاية والإصابات</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> إرشادات التغذية الصحية</li>
+                            <li><i class="fa-solid fa-check text-brand-accent ml-1 text-xs"></i> تأهيل وعلاج طبيعي</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goalkeepers Section -->
+            <div class="mt-12 bg-brand p-8 rounded-2xl border border-brand-accent/30 shadow-2xl relative overflow-hidden">
+                <div class="absolute left-0 bottom-0 opacity-10 z-0">
+                    <i class="fa-solid fa-mitten text-[200px] text-white transform -rotate-45"></i>
+                </div>
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div class="md:w-1/3 text-center md:text-right border-b md:border-b-0 md:border-l border-brand-accent/50 pb-6 md:pb-0 md:pl-8">
+                        <h3 class="text-2xl font-bold text-brand-accent mb-3"><i class="fa-solid fa-star text-sm"></i> هدفنا:</h3>
+                        <p class="text-lg">تخريج حراس مرمى متميزين قادرين على حماية الشباك في أعلى المستويات</p>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-brand-accent text-sm"></i> فرع تدريب حراس المرمى <i class="fa-solid fa-star text-brand-accent text-sm"></i>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <p><i class="fa-solid fa-check-circle text-brand-accent ml-2"></i> مدربين متخصصين في حراسة المرمى</p>
+                            <p><i class="fa-solid fa-check-circle text-brand-accent ml-2"></i> برامج تقنية وبدنية متخصصة</p>
+                            <p><i class="fa-solid fa-check-circle text-brand-accent ml-2"></i> تطوير ردود الفعل والسرعة والتمركز</p>
+                            <p><i class="fa-solid fa-check-circle text-brand-accent ml-2"></i> تحليل الأداء وتصحيح الأخطاء</p>
+                            <p><i class="fa-solid fa-check-circle text-brand-accent ml-2"></i> تجهيز ذهني لمواجهة الضغوط</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Strip -->
+            <div class="mt-12 flex flex-wrap justify-center gap-4 text-center">
+                <div class="bg-white/10 px-6 py-3 rounded-full flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-medal text-brand-gold"></i> مشاركة في بطولات معتمدة
+                </div>
+                <div class="bg-white/10 px-6 py-3 rounded-full flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-check-to-slot text-brand-gold"></i> متابعة مستمرة وتقييم دوري
+                </div>
+                <div class="bg-white/10 px-6 py-3 rounded-full flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-users text-brand-gold"></i> بيئة تدريبية آمنة ومحفزة
+                </div>
+                <div class="bg-white/10 px-6 py-3 rounded-full flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-building text-brand-gold"></i> مرافق وتجهيزات رياضية حديثة
+                </div>
+                <div class="bg-white/10 px-6 py-3 rounded-full flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-certificate text-brand-gold"></i> طاقم فني مؤهل وذو خبرة
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand mb-4">الفئات السنية للنادي</h2>
+                <div class="w-24 h-1 bg-brand-accent mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-600">نستقبل المواهب في جميع الفئات العمرية لضمان تكوين قاعدي صلب</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-1 transition border-b-4 border-green-500">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-child"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand">براعم</h3>
+                    <p class="text-sm text-gray-500 mt-2">أقل من 11 سنة (U11)</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-1 transition border-b-4 border-blue-500">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand">أصاغر</h3>
+                    <p class="text-sm text-gray-500 mt-2">أقل من 13 سنة (U13)</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-1 transition border-b-4 border-yellow-500">
+                    <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-running"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand">أشبال</h3>
+                    <p class="text-sm text-gray-500 mt-2">أقل من 15 سنة (U15)</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-1 transition border-b-4 border-purple-500">
+                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand">أواسط</h3>
+                    <p class="text-sm text-gray-500 mt-2">أقل من 17 سنة (U17)</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-1 transition border-b-4 border-red-500">
+                    <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand">أكابر</h3>
+                    <p class="text-sm text-gray-500 mt-2">الفريق الأول</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-12 border-b pb-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-brand">أحدث الأخبار</h2>
+                    <div class="w-16 h-1 bg-brand-accent mt-2 rounded-full"></div>
+                </div>
+                <button class="text-brand-accent font-semibold hover:text-brand transition">عرض كل الأخبار <i class="fa-solid fa-arrow-left mr-1"></i></button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- News Card 1 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-brand-light opacity-50 group-hover:opacity-30 transition"></div>
+                        <i class="fa-solid fa-image text-4xl text-gray-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                        <div class="absolute top-4 right-4 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-full">الفريق الأول</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3 gap-4">
+                            <span><i class="fa-regular fa-calendar ml-1"></i> 22 جوان 2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand mb-3 group-hover:text-brand-accent transition">انطلاق التحضيرات للموسم الجديد 2026-2027</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">بدأ الفريق الأول لجمعية الواحات الأغواطية تحضيراته الجدية للموسم الرياضي الجديد وسط أجواء حماسية وتفاؤل كبير من الطاقم الفني واللاعبين.</p>
+                        <a href="#" class="inline-block mt-4 text-brand-accent font-semibold hover:text-brand">اقرأ المزيد <i class="fa-solid fa-angle-left text-xs ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- News Card 2 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-brand-light opacity-50 group-hover:opacity-30 transition"></div>
+                        <i class="fa-solid fa-image text-4xl text-gray-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                        <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">الفئات السنية</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3 gap-4">
+                            <span><i class="fa-regular fa-calendar ml-1"></i> 18 جوان 2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand mb-3 group-hover:text-brand-accent transition">تتويج فريق الأشبال بالبطولة الولائية</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">في إنجاز رائع يعكس نجاح برنامج التكوين، تمكن فريق الأشبال من حصد لقب البطولة الولائية بعد فوزه المستحق في المباراة النهائية.</p>
+                        <a href="#" class="inline-block mt-4 text-brand-accent font-semibold hover:text-brand">اقرأ المزيد <i class="fa-solid fa-angle-left text-xs ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- News Card 3 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                    <div class="h-48 bg-gray-200 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-brand-light opacity-50 group-hover:opacity-30 transition"></div>
+                        <i class="fa-solid fa-image text-4xl text-gray-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full">إدارة النادي</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3 gap-4">
+                            <span><i class="fa-regular fa-calendar ml-1"></i> 15 جوان 2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand mb-3 group-hover:text-brand-accent transition">اجتماع الطاقم الإداري لتسطير أهداف الموسم</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">عقد رئيس النادي السيد بهلولي تجاني اجتماعاً مع أعضاء المكتب المسير والمدربين لوضع الخطوط العريضة لبرنامج الجمعية الممتد حتى 2027.</p>
+                        <a href="#" class="inline-block mt-4 text-brand-accent font-semibold hover:text-brand">اقرأ المزيد <i class="fa-solid fa-angle-left text-xs ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration and Suggestions Section -->
+    <section id="register" class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Registration Form -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-brand-accent text-white rounded-full flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-brand">تسجيلات الرياضيين</h2>
+                            <p class="text-gray-500 text-sm">انضم إلى أكاديمية النادي للموسم الجديد</p>
+                        </div>
+                    </div>
+                    
+                    <form onsubmit="handleRegistration(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">الاسم</label>
+                                <input type="text" id="regName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition" placeholder="الاسم الأول">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">اللقب</label>
+                                <input type="text" id="regSurname" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition" placeholder="اللقب العائلي">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">تاريخ الميلاد (السن)</label>
+                                <input type="date" id="regDate" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition text-right" dir="rtl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">الفئة</label>
+                                <select required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition bg-white">
+                                    <option value="">اختر الفئة</option>
+                                    <option value="براعم">براعم (U11)</option>
+                                    <option value="أصاغر">أصاغر (U13)</option>
+                                    <option value="أشبال">أشبال (U15)</option>
+                                    <option value="أواسط">أواسط (U17)</option>
+                                    <option value="أكابر">أكابر (الفريق الأول)</option>
+                                    <option value="حراس">فرع حراس المرمى</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">رقم هاتف الولي</label>
+                            <input type="tel" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition" placeholder="05XX XX XX XX" dir="ltr">
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-brand hover:bg-brand-light text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                            تأكيد التسجيل المبكر
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Suggestions Form -->
+                <div id="suggestions" class="bg-brand rounded-2xl shadow-xl p-8 text-white relative overflow-hidden">
+                    <!-- Background Pattern -->
+                    <i class="fa-solid fa-comments absolute -bottom-10 -left-10 text-[150px] opacity-5"></i>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-white/10 text-white rounded-full flex items-center justify-center text-xl backdrop-blur-sm border border-white/20">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold">صندوق المقترحات</h2>
+                                <p class="text-blue-200 text-sm">اكتب مقترحك وتعليقك (خاص بالزوار)</p>
+                            </div>
+                        </div>
+                        
+                        <form onsubmit="handleSuggestion(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-blue-100 mb-1">الاسم (اختياري)</label>
+                                <input type="text" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-300 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition backdrop-blur-sm" placeholder="اسمك">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-blue-100 mb-1">المقترح أو التعليق</label>
+                                <textarea required rows="4" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-300 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition backdrop-blur-sm" placeholder="نرحب بجميع آرائكم ومقترحاتكم لتطوير النادي..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-brand-accent hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+                                إرسال المقترح <i class="fa-solid fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-gray-300 py-12 border-t-4 border-brand-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-brand-light rounded-lg flex items-center justify-center border border-brand-accent">
+                        <i class="fa-solid fa-shield-halved text-white"></i>
+                    </div>
+                    <h1 class="font-bold text-xl text-white">الواحات الأغواطية</h1>
+                </div>
+                <p class="text-sm leading-relaxed text-gray-400 mb-6">
+                    جمعية الواحات الأغواطية لكرة القدم. نعمل بروح الفريق ونبني جيلاً يصنع المستقبل... تطوير الفريق وتحقيق البطولات.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-white transition"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold text-white mb-6">روابط سريعة</h3>
+                <ul class="space-y-3">
+                    <li><a href="#about" class="hover:text-brand-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-left text-xs"></i> الإدارة والتعريف</a></li>
+                    <li><a href="#program" class="hover:text-brand-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-left text-xs"></i> برنامج الجمعية</a></li>
+                    <li><a href="#categories" class="hover:text-brand-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-left text-xs"></i> الفئات السنية</a></li>
+                    <li><a href="#register" class="hover:text-brand-accent transition flex items-center gap-2"><i class="fa-solid fa-angle-left text-xs"></i> التسجيل</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold text-white mb-6">تواصل معنا</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1 text-brand-accent"></i>
+                        <span>المركب الرياضي، ولاية الأغواط، الجزائر</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-brand-accent"></i>
+                        <span dir="ltr">0667 55 02 51</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-brand-accent"></i>
+                        <span>contact@wahat-laghouat.dz</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-white/10 text-center text-sm">
+            <p>&copy; 2026 جمعية الواحات الأغواطية لكرة القدم. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleModal('loginModal')"></div>
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative z-10 transform scale-95 opacity-0 transition-all duration-300" id="loginModalContent">
+                <!-- Close btn -->
+                <button onclick="toggleModal('loginModal')" class="absolute top-4 left-4 text-gray-400 hover:text-red-500 transition">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+                
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-brand rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-brand-accent shadow-lg">
+                            <i class="fa-solid fa-user-lock text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-brand">دخول الأعضاء</h3>
+                        <p class="text-gray-500 text-sm mt-1">يرجى إدخال بيانات الاعتماد الخاصة بك</p>
+                    </div>
+                    
+                    <form onsubmit="handleLogin(event)" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">اسم المستخدم</label>
+                            <div class="relative">
+                                <span class="absolute right-3 top-3 text-gray-400"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" id="loginUser" required class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition" placeholder="مثال: wahat.laghouat" dir="ltr">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">كلمة المرور</label>
+                            <div class="relative">
+                                <span class="absolute right-3 top-3 text-gray-400"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" id="loginPass" required class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition" placeholder="••••••••" dir="ltr">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-brand hover:bg-brand-light text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md flex justify-center items-center gap-2">
+                            تسجيل الدخول <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        </button>
+                    </form>
+                    <div class="mt-4 text-center">
+                        <p class="text-xs text-gray-400">للحصول على بيانات الدخول، يرجى التواصل مع الإدارة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about">
-    <div class="card">
-        <h2>تعريف الجمعية</h2>
-        <p>جمعية رياضية تهدف إلى تكوين الأطفال والشباب في كرة القدم داخل بيئة منظمة واحترافية.</p>
+    <!-- Alert Modal (Replaces standard alerts) -->
+    <div id="alertModal" class="fixed inset-0 z-[110] hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeAlert()"></div>
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm relative z-10 text-center transform scale-95 opacity-0 transition-all duration-300" id="alertModalContent">
+                <div id="alertIcon" class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                    <!-- Icon injected by JS -->
+                </div>
+                <h3 id="alertTitle" class="text-xl font-bold mb-2"></h3>
+                <p id="alertMessage" class="text-gray-600 mb-6"></p>
+                <button onclick="closeAlert()" class="w-full py-2 px-4 rounded-lg font-bold text-white transition" id="alertBtn">
+                    حسناً
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>الإدارة</h3>
-        <p>رئيس النادي: بهلولي تجاني</p>
-        <p>نائب الرئيس: بن ثابت موسى</p>
-        <p>الكاتب العام: طعبة أحمد</p>
-    </div>
-</section>
+    <!-- Scripts -->
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-xl', 'bg-brand/95', 'backdrop-blur-md');
+                nav.classList.remove('bg-brand');
+            } else {
+                nav.classList.remove('shadow-xl', 'bg-brand/95', 'backdrop-blur-md');
+                nav.classList.add('bg-brand');
+            }
+        });
 
-<!-- NEWS -->
-<section id="news">
-    <div class="card">
-        <h2>الأخبار</h2>
-        <p>📢 انطلاق التسجيلات للموسم الجديد قريباً</p>
-        <p>⚽ تنظيم دورة محلية للفئات الصغرى</p>
-    </div>
-</section>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
 
-<!-- REGISTER -->
-<section id="register">
-    <div class="card">
-        <h2>تسجيل الأطفال</h2>
-        <input placeholder="اسم الطفل">
-        <input placeholder="العمر">
-        <input placeholder="رقم الهاتف">
-        <button class="btn">إرسال التسجيل</button>
-    </div>
-</section>
+        // Modal Toggle
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = document.getElementById(modalId + 'Content');
+            
+            if (modal.classList.contains('hidden')) {
+                // Open
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                // Close
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
 
-<!-- SUGGEST -->
-<section id="suggest">
-    <div class="card">
-        <h2>اقتراحات الزوار</h2>
-        <textarea placeholder="اكتب اقتراحك أو تعليقك"></textarea>
-        <button class="btn">إرسال</button>
-    </div>
-</section>
+        // Custom Alert System
+        function showAlert(type, title, message) {
+            const modal = document.getElementById('alertModal');
+            const content = document.getElementById('alertModalContent');
+            const icon = document.getElementById('alertIcon');
+            const titleEl = document.getElementById('alertTitle');
+            const msgEl = document.getElementById('alertMessage');
+            const btn = document.getElementById('alertBtn');
 
-<!-- LOGIN -->
-<section id="login">
-    <div class="login-box">
-        <h2>دخول العضوية</h2>
-        <input id="user" placeholder="اسم المستخدم">
-        <input id="pass" type="password" placeholder="كلمة المرور">
-        <button class="btn" onclick="login()">دخول</button>
-        <p id="msg"></p>
-    </div>
-</section>
+            titleEl.textContent = title;
+            msgEl.textContent = message;
 
-<footer>
-    © 2026 جمعية الواحات الأغواطية لكرة القدم
-</footer>
-<script>
-function show(id){
-    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-}
+            if (type === 'success') {
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+                icon.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl bg-green-100 text-green-500';
+                btn.className = 'w-full py-2 px-4 rounded-lg font-bold text-white transition bg-green-500 hover:bg-green-600';
+            } else if (type === 'error') {
+                icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                icon.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl bg-red-100 text-red-500';
+                btn.className = 'w-full py-2 px-4 rounded-lg font-bold text-white transition bg-red-500 hover:bg-red-600';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-info"></i>';
+                icon.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl bg-blue-100 text-brand-accent';
+                btn.className = 'w-full py-2 px-4 rounded-lg font-bold text-white transition bg-brand-accent hover:bg-blue-600';
+            }
 
-function login(){
-    let u = document.getElementById("user").value;
-    let p = document.getElementById("pass").value;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
 
-    if(u === "wahat.laghouat" && p === "wahat2026"){
-        document.getElementById("msg").innerHTML = "✅ تم الدخول بنجاح";
-    }else{
-        document.getElementById("msg").innerHTML = "❌ معلومات غير صحيحة";
-    }
-}
-</script>
+        function closeAlert() {
+            const modal = document.getElementById('alertModal');
+            const content = document.getElementById('alertModalContent');
+            
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
 
+        // Handle Login Logic
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+
+            // Checking credentials as requested
+            if (user === 'wahat.laghouat' && pass === 'wahat2026') {
+                toggleModal('loginModal');
+                // Small delay to allow login modal to close before showing alert
+                setTimeout(() => {
+                    showAlert('success', 'مرحباً بك!', 'تم تسجيل الدخول بنجاح إلى منطقة الأعضاء.');
+                    // Clear inputs
+                    document.getElementById('loginUser').value = '';
+                    document.getElementById('loginPass').value = '';
+                    
+                    // Update UI to show logged in state
+                    const loginBtns = document.querySelectorAll('button[onclick="toggleModal(\'loginModal\')"]');
+                    loginBtns.forEach(btn => {
+                        btn.innerHTML = '<i class="fa-solid fa-user-check"></i> حساب الإدارة';
+                        btn.onclick = () => showAlert('info', 'حساب الإدارة', 'أنت مسجل الدخول حالياً كعضو في الطاقم الإداري.');
+                    });
+                }, 300);
+            } else {
+                showAlert('error', 'خطأ في الدخول', 'اسم المستخدم أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.');
+            }
+        }
+
+        // Handle Registration Form
+        function handleRegistration(event) {
+            event.preventDefault();
+            const name = document.getElementById('regName').value;
+            const surname = document.getElementById('regSurname').value;
+            
+            showAlert('success', 'تم استلام طلبك', `شكراً لك يا ${name} ${surname}. تم تسجيل طلب انضمامك المبدئي بنجاح، سيتم التواصل مع الولي قريباً لتأكيد الملف.`);
+            event.target.reset();
+        }
+
+        // Handle Suggestion Form
+        function handleSuggestion(event) {
+            event.preventDefault();
+            showAlert('success', 'شكراً لك', 'تم إرسال مقترحك للإدارة بنجاح. نحن نقدر مساهمتك في تطوير النادي.');
+            event.target.reset();
+        }
+    </script>
 </body>
 </html>
