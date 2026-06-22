@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جمعية الواحات الأغواطية لكرة القدم</title>
+
+<style>
+    body{
+        margin:0;
+        font-family: "Tahoma", sans-serif;
+        background:#0b2e13;
+        color:white;
+    }
+
+    header{
+        background:#071b0c;
+        text-align:center;
+        padding:20px;
+        border-bottom:3px solid gold;
+    }
+
+    header img{
+        width:140px;
+        border-radius:10px;
+    }
+
+    h1,h2{
+        color:gold;
+    }
+
+    nav{
+        display:flex;
+        justify-content:center;
+        gap:15px;
+        background:#0f3a1c;
+        padding:10px;
+        flex-wrap:wrap;
+    }
+
+    nav button{
+        background:gold;
+        border:none;
+        padding:10px 15px;
+        cursor:pointer;
+        font-weight:bold;
+        border-radius:5px;
+    }
+
+    section{
+        display:none;
+        padding:20px;
+    }
+
+    .active{
+        display:block;
+    }
+
+    .card{
+        background:#134d28;
+        padding:15px;
+        margin:10px 0;
+        border-radius:10px;
+    }
+
+    input, textarea{
+        width:100%;
+        padding:10px;
+        margin:8px 0;
+        border:none;
+        border-radius:5px;
+    }
+
+    .btn{
+        background:gold;
+        padding:10px;
+        border:none;
+        cursor:pointer;
+        font-weight:bold;
+        width:100%;
+    }
+
+    .login-box{
+        max-width:400px;
+        margin:auto;
+        background:#134d28;
+        padding:20px;
+        border-radius:10px;
+    }
+
+    footer{
+        text-align:center;
+        padding:15px;
+        background:#071b0c;
+        margin-top:20px;
+        border-top:2px solid gold;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="/mnt/data/1000057568.png" alt="الشعار">
+    <h1>جمعية الواحات الأغواطية لكرة القدم</h1>
+</header>
+
+<nav>
+    <button onclick="show('home')">الرئيسية</button>
+    <button onclick="show('about')">تعريف الجمعية</button>
+    <button onclick="show('news')">الأخبار</button>
+    <button onclick="show('register')">تسجيل الأطفال</button>
+    <button onclick="show('suggest')">اقتراحات</button>
+    <button onclick="show('login')">دخول العضوية</button>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="active">
+    <div class="card">
+        <h2>مرحبا بكم</h2>
+        <p>الموقع الرسمي لجمعية الواحات الأغواطية لكرة القدم، منصة لتطوير المواهب الرياضية.</p>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="card">
+        <h2>تعريف الجمعية</h2>
+        <p>جمعية رياضية تهدف إلى تكوين الأطفال والشباب في كرة القدم داخل بيئة منظمة واحترافية.</p>
+    </div>
+
+    <div class="card">
+        <h3>الإدارة</h3>
+        <p>رئيس النادي: بهلولي تجاني</p>
+        <p>نائب الرئيس: بن ثابت موسى</p>
+        <p>الكاتب العام: طعبة أحمد</p>
+    </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+    <div class="card">
+        <h2>الأخبار</h2>
+        <p>📢 انطلاق التسجيلات للموسم الجديد قريباً</p>
+        <p>⚽ تنظيم دورة محلية للفئات الصغرى</p>
+    </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+    <div class="card">
+        <h2>تسجيل الأطفال</h2>
+        <input placeholder="اسم الطفل">
+        <input placeholder="العمر">
+        <input placeholder="رقم الهاتف">
+        <button class="btn">إرسال التسجيل</button>
+    </div>
+</section>
+
+<!-- SUGGEST -->
+<section id="suggest">
+    <div class="card">
+        <h2>اقتراحات الزوار</h2>
+        <textarea placeholder="اكتب اقتراحك أو تعليقك"></textarea>
+        <button class="btn">إرسال</button>
+    </div>
+</section>
+
+<!-- LOGIN -->
+<section id="login">
+    <div class="login-box">
+        <h2>دخول العضوية</h2>
+        <input id="user" placeholder="اسم المستخدم">
+        <input id="pass" type="password" placeholder="كلمة المرور">
+        <button class="btn" onclick="login()">دخول</button>
+        <p id="msg"></p>
+    </div>
+</section>
+
+<footer>
+    © 2026 جمعية الواحات الأغواطية لكرة القدم
+</footer>
+<script>
+function show(id){
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+function login(){
+    let u = document.getElementById("user").value;
+    let p = document.getElementById("pass").value;
+
+    if(u === "wahat.laghouat" && p === "wahat2026"){
+        document.getElementById("msg").innerHTML = "✅ تم الدخول بنجاح";
+    }else{
+        document.getElementById("msg").innerHTML = "❌ معلومات غير صحيحة";
+    }
+}
+</script>
+
+</body>
+</html>
